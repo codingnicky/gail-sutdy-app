@@ -59,7 +59,6 @@ body {
     overflow-x: hidden;
     transition: background-color var(--transition-normal);
     /* iPhone safe area対応 */
-    padding-top: env(safe-area-inset-top);
     padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
 }
 
@@ -71,9 +70,10 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: var(--shadow-sm);
     position: sticky;
-    top: env(safe-area-inset-top, 0);
+    top: 0;
     z-index: 100;
     transition: all var(--transition-normal);
+    padding-top: env(safe-area-inset-top);
 }
 
 body.dark-mode .header {
@@ -1208,10 +1208,11 @@ body.dark-mode .bottom-nav {
 
 .confetti {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     opacity: 0;
-    animation: confettiFall 3s ease-out forwards;
+    animation: confettiFall 2s ease-out forwards;
+    will-change: transform, opacity;
 }
 
 @keyframes confettiFall {
@@ -1221,7 +1222,7 @@ body.dark-mode .bottom-nav {
     }
     100% {
         opacity: 0;
-        transform: translateY(100vh) rotateZ(720deg);
+        transform: translateY(100vh) rotateZ(360deg);
     }
 }
 

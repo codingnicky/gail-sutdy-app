@@ -778,7 +778,7 @@ function triggerConfetti() {
     const container = document.getElementById('confettiContainer');
     const colors = ['#1A73E8', '#0F9D58', '#DB4437', '#F4B400', '#AB47BC'];
     const shapes = ['square', 'circle', 'triangle'];
-    const confettiCount = 50;
+    const confettiCount = 20; // 50→20に削減
 
     for (let i = 0; i < confettiCount; i++) {
         const confetti = document.createElement('div');
@@ -793,18 +793,18 @@ function triggerConfetti() {
         confetti.style.backgroundColor = color;
         confetti.style.borderBottomColor = color;
 
-        // ランダムな遅延
-        confetti.style.animationDelay = Math.random() * 0.3 + 's';
+        // ランダムな遅延（短縮）
+        confetti.style.animationDelay = Math.random() * 0.2 + 's';
 
-        // ランダムな持続時間
-        confetti.style.animationDuration = (Math.random() * 1 + 2) + 's';
+        // ランダムな持続時間（短縮：2-3秒→1.5-2.5秒）
+        confetti.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
 
         container.appendChild(confetti);
 
-        // アニメーション終了後に削除
+        // アニメーション終了後に削除（短縮）
         setTimeout(() => {
             confetti.remove();
-        }, 3500);
+        }, 2700);
     }
 }
 
