@@ -1,0 +1,530 @@
+[
+  {
+    "id": 1,
+    "category": "試験概要",
+    "question": "Generative AI Leader",
+    "answer": "生成 AI による企業変革を包括的に理解し、Google Cloud のサービスに関するビジネス知識を持ち、革新的かつ責任ある AI 導入を主導できるプロフェッショナル。"
+  },
+  {
+    "id": 2,
+    "category": "技術基礎",
+    "question": "生成 AI (Generative AI)",
+    "answer": "新しいコンテンツ（テキスト、画像、コード等）を作成できる AI。マルチモーダルな対応も可能で、コンテンツ作成に重点を置く ML の一用途。"
+  },
+  {
+    "id": 3,
+    "category": "技術基礎",
+    "question": "AI (人工知能)",
+    "answer": "学習、問題解決、意思決定など、通常は人間の知能を必要とするタスクを実行できるように構築された機械。"
+  },
+  {
+    "id": 4,
+    "category": "技術基礎",
+    "question": "ML (機械学習)",
+    "answer": "機械がデータから学習して特定のタスクを実行する AI の一分野。"
+  },
+  {
+    "id": 5,
+    "category": "技術基礎",
+    "question": "ディープ ラーニング (Deep Learning)",
+    "answer": "多くのレイヤを持つ人工のニューラル ネットワークを使用してデータから複雑なパターンを抽出する ML の一分野。"
+  },
+  {
+    "id": 6,
+    "category": "技術基礎",
+    "question": "基盤モデル (Foundation Model)",
+    "answer": "膨大なデータセットでトレーニングされた大規模な AI モデル。多くのタスクに適応でき、追加トレーニングで専門領域にも対応可能。"
+  },
+  {
+    "id": 7,
+    "category": "技術基礎",
+    "question": "大規模言語モデル (LLM)",
+    "answer": "人間が使う言語の理解と生成を目的とした基盤モデルの一種。"
+  },
+  {
+    "id": 8,
+    "category": "プロンプト",
+    "question": "プロンプト (Prompt)",
+    "answer": "基盤モデルに指示や入力を与えて、目的とする出力を生成させる方法。"
+  },
+  {
+    "id": 9,
+    "category": "プロンプト",
+    "question": "プロンプト エンジニアリング",
+    "answer": "指示や入力を効果的に作成し、AI モデルの価値を最大限に高めながら特定のニーズに合わせて回答を調整する理論的・実践的な手法。"
+  },
+  {
+    "id": 10,
+    "category": "技術基礎",
+    "question": "マルチモーダル (Multimodal)",
+    "answer": "テキスト、画像、コードなど、さまざまな種類のデータを同時に処理および生成できる能力。"
+  },
+  {
+    "id": 11,
+    "category": "プロンプト",
+    "question": "ゼロショット (Zero-shot)",
+    "answer": "前例を提供せずに、モデルにタスクの完了を依頼するプロンプト手法。"
+  },
+  {
+    "id": 12,
+    "category": "プロンプト",
+    "question": "ワンショット (One-shot)",
+    "answer": "学習の元となる例を 1 つだけモデルに提供するプロンプト手法。"
+  },
+  {
+    "id": 13,
+    "category": "プロンプト",
+    "question": "少数ショット (Few-shot)",
+    "answer": "学習の元となる複数の例をモデルに提供するプロンプト手法。"
+  },
+  {
+    "id": 14,
+    "category": "プロンプト",
+    "question": "ロール (Role)",
+    "answer": "モデルにペルソナ（役割）を割り当てて、スタイル、トーン、フォーカスを調整する手法。"
+  },
+  {
+    "id": 15,
+    "category": "プロンプト",
+    "question": "プロンプト チェーン (Prompt Chain)",
+    "answer": "AI と対話を継続し、コンテキスト（文脈）を維持しながらやり取りを続ける手法。"
+  },
+  {
+    "id": 16,
+    "category": "プロンプト",
+    "question": "思考の連鎖 (CoT)",
+    "answer": "中間的な推論ステップを含む例を提供し、問題解決プロセスを通じて LLM を誘導する高度な手法。"
+  },
+  {
+    "id": 17,
+    "category": "プロンプト",
+    "question": "ReAct (Reason and act)",
+    "answer": "ユーザーのクエリに対し、LLM による「推論」と「行動」を組み合わせて実行させる手法。"
+  },
+  {
+    "id": 18,
+    "category": "プロンプト",
+    "question": "メタプロンプティング",
+    "answer": "プロンプトを使用して、AI モデルが他のプロンプトを生成・変更・解釈できるようにガイドする手法。"
+  },
+  {
+    "id": 19,
+    "category": "技術基礎",
+    "question": "グラウンディング (Grounding)",
+    "answer": "AI の出力を検証可能な情報源に紐付けること。NotebookLM のようにソース資料を根拠に使うこと。"
+  },
+  {
+    "id": 20,
+    "category": "技術基礎",
+    "question": "検索拡張生成 (RAG)",
+    "answer": "LLM が外部ソースから関連情報を検索し、その情報をプロンプトに組み込んで回答を生成する手法。"
+  },
+  {
+    "id": 21,
+    "category": "技術基礎",
+    "question": "ファインチューニング (Finetuning)",
+    "answer": "既存の基盤モデルを、特定のタスクやドメインに合わせて追加学習させ、パフォーマンスを強化する手法。"
+  },
+  {
+    "id": 22,
+    "category": "責任あるAI",
+    "question": "人間参加型 (HITL)",
+    "answer": "人間による入力やレビューが ML ワークフローに統合されているプロセス。リスクの高い意思決定などで重要。"
+  },
+  {
+    "id": 23,
+    "category": "リスク管理",
+    "question": "ハルシネーション (Hallucination)",
+    "answer": "AI モデルが、正確ではない出力や実際の情報に基づかない情報を生成すること。"
+  },
+  {
+    "id": 24,
+    "category": "リスク管理",
+    "question": "バイアス (Bias)",
+    "answer": "学習データに含まれる偏りが、モデルの出力において拡大・反映される可能性。"
+  },
+  {
+    "id": 25,
+    "category": "責任あるAI",
+    "question": "公平性 (Fairness)",
+    "answer": "モデルの出力を評価し、偏りがないようにする責任ある開発の重要要素。"
+  },
+  {
+    "id": 26,
+    "category": "リスク管理",
+    "question": "ナレッジ カットオフ",
+    "answer": "モデルのトレーニングが終了した時点。それ以降の最新イベントに関する情報が欠落している状態。"
+  },
+  {
+    "id": 27,
+    "category": "技術仕様",
+    "question": "コンテキスト ウィンドウ",
+    "answer": "モデルが一度に考慮（処理）できるテキストの量。"
+  },
+  {
+    "id": 28,
+    "category": "技術基礎",
+    "question": "エージェント (Agent)",
+    "answer": "目標達成のために周囲を観察し、ツールを使用して最適な行動を自律的に学習・実行するアプリケーション。"
+  },
+  {
+    "id": 29,
+    "category": "プラットフォーム",
+    "question": "プラットフォーム (Platform)",
+    "answer": "API、データ管理、デプロイツールを提供し、インフラとアプリの間のギャップを埋めるレイヤ。"
+  },
+  {
+    "id": 30,
+    "category": "プラットフォーム",
+    "question": "インフラストラクチャ",
+    "answer": "サーバー、GPU、TPU などの計算リソースや、データの保存・実行に必要なソフトウェア層。"
+  },
+  {
+    "id": 31,
+    "category": "プラットフォーム",
+    "question": "モデル (Model)",
+    "answer": "膨大なデータで訓練された複雑なアルゴリズム。パターンを学習し、生成・翻訳・回答などを可能にする。"
+  },
+  {
+    "id": 32,
+    "category": "プラットフォーム",
+    "question": "アプリケーション (Application)",
+    "answer": "ユーザーが AI の機能と直接やり取りできるフロントエンド部分。"
+  },
+  {
+    "id": 33,
+    "category": "Googleツール",
+    "question": "Vertex AI",
+    "answer": "Google Cloud の統合 ML プラットフォーム。構築、トレーニング、デプロイを可能にする。"
+  },
+  {
+    "id": 34,
+    "category": "Googleツール",
+    "question": "Model Garden",
+    "answer": "Vertex AI 内で、Google やサードパーティ、オープンソースの既存モデルを選択できるカタログ機能。"
+  },
+  {
+    "id": 35,
+    "category": "Googleツール",
+    "question": "Model Builder",
+    "answer": "Vertex AI 内で、独自のモデルをトレーニング・カスタマイズできる機能。"
+  },
+  {
+    "id": 36,
+    "category": "Googleツール",
+    "question": "Vertex AI Agent Builder",
+    "answer": "カスタムの生成 AI エージェントを迅速に構築するためのサービス。"
+  },
+  {
+    "id": 37,
+    "category": "Googleツール",
+    "question": "Vertex AI Studio",
+    "answer": "基盤モデルの構築、調整、デプロイを行うためのプロダクション向け環境。"
+  },
+  {
+    "id": 38,
+    "category": "Googleツール",
+    "question": "Google AI Studio",
+    "answer": "迅速なプロトタイピングを目的とした、無料で使用できる開発プロダクト。"
+  },
+  {
+    "id": 39,
+    "category": "Googleツール",
+    "question": "Vertex AI Search",
+    "answer": "ビジネス向けの検索とレコメンデーションを提供する。事前構築済み RAG としても利用可能。"
+  },
+  {
+    "id": 40,
+    "category": "Googleツール",
+    "question": "Customer Engagement Suite",
+    "answer": "対話型 AI やエージェント支援など、顧客エンゲージメントを高めるツール群。"
+  },
+  {
+    "id": 41,
+    "category": "Googleツール",
+    "question": "Gemini",
+    "answer": "マルチモーダル理解と高度な会話能力を持つ Google の最新生成 AI モデル。"
+  },
+  {
+    "id": 42,
+    "category": "Googleツール",
+    "question": "Gemini アプリ (Gemini Apps)",
+    "answer": "文章作成、要約、翻訳、画像作成などができる Google の AI チャットボット。"
+  },
+  {
+    "id": 43,
+    "category": "Googleツール",
+    "question": "Gemini for Google Workspace",
+    "answer": "Gmail、スライド、Meet など日常的なアプリに統合された生成 AI アシスタント。"
+  },
+  {
+    "id": 44,
+    "category": "Googleツール",
+    "question": "Gemini for Google Cloud",
+    "answer": "開発、管理、分析、セキュリティ強化など Cloud 業務を支援する AI アシスタント。"
+  },
+  {
+    "id": 45,
+    "category": "Googleツール",
+    "question": "NotebookLM",
+    "answer": "アップロードされた資料をグラウンディングの根拠として使い、要約やリサーチを支援する AI アシスタント。"
+  },
+  {
+    "id": 46,
+    "category": "Googleツール",
+    "question": "Gemma",
+    "answer": "ローカルデプロイや専門化されたアプリ開発向けに提供されているカスタマイズ可能な軽量モデル。"
+  },
+  {
+    "id": 47,
+    "category": "Googleツール",
+    "question": "Imagen",
+    "answer": "テキストから高品質な画像を生成するテキスト画像変換拡散モデル。"
+  },
+  {
+    "id": 48,
+    "category": "Googleツール",
+    "question": "Veo",
+    "answer": "テキストや画像に基づいて高品質な動画コンテンツを生成するモデル。"
+  },
+  {
+    "id": 49,
+    "category": "責任あるAI",
+    "question": "責任ある AI (Responsible AI)",
+    "answer": "AI が害を及ぼさず倫理的に使用されることを保証する。ライフサイクル全体での考慮が必要。"
+  },
+  {
+    "id": 50,
+    "category": "責任あるAI",
+    "question": "安全な AI (Secure AI)",
+    "answer": "AI アプリケーションが外部の危害や攻撃から守られている状態。"
+  },
+  {
+    "id": 51,
+    "category": "責任あるAI",
+    "question": "セキュア AI フレームワーク (SAIF)",
+    "answer": "組織が AI / ML モデルのリスクを管理し、セキュリティを確保するための Google の推奨枠組み。"
+  },
+  {
+    "id": 52,
+    "category": "責任あるAI",
+    "question": "IAM",
+    "answer": "Identity and Access Management。リソースへのアクセスを制御する権限管理システム。"
+  },
+  {
+    "id": 53,
+    "category": "責任あるAI",
+    "question": "Security Command Center",
+    "answer": "セキュリティ ポスチャー（姿勢）を可視化し管理するためのプラットフォーム。"
+  },
+  {
+    "id": 54,
+    "category": "データ管理",
+    "question": "データ (Data)",
+    "answer": "数値、テキスト、画像、音声など、さまざまな形で表現される情報。"
+  },
+  {
+    "id": 55,
+    "category": "データ管理",
+    "question": "構造化データ",
+    "answer": "整理されていて検索が容易なデータ。リレーショナル データベース（DB）等に保存される。"
+  },
+  {
+    "id": 56,
+    "category": "データ管理",
+    "question": "非構造化データ",
+    "answer": "事前定義された構造を持たず、分析に高度な手法が必要なデータ（画像、音声、自由形式テキスト等）。"
+  },
+  {
+    "id": 57,
+    "category": "データ管理",
+    "question": "質の高いデータ",
+    "answer": "正確性、完全性、整合性、関連性の高いデータ。"
+  },
+  {
+    "id": 58,
+    "category": "データ管理",
+    "question": "アクセス可能なデータ",
+    "answer": "モデルのトレーニングに適した形式で、すぐに利用可能な状態にあるデータ。"
+  },
+  {
+    "id": 59,
+    "category": "データ管理",
+    "question": "ラベル付きデータ",
+    "answer": "タグや名前などの意味情報が関連付けられたデータ。"
+  },
+  {
+    "id": 60,
+    "category": "データ管理",
+    "question": "ラベルなしデータ",
+    "answer": "タグ付けされていない、未加工の元データ。"
+  },
+  {
+    "id": 61,
+    "category": "MLライフサイクル",
+    "question": "ML ライフサイクル",
+    "answer": "取り込みと準備、トレーニング、デプロイ、管理の一連のプロセス。"
+  },
+  {
+    "id": 62,
+    "category": "MLライフサイクル",
+    "question": "モデルの管理 (Model Management)",
+    "answer": "バージョニング、追跡、ドリフトモニタリングなど、モデルを長期にわたり保守するプロセス。"
+  },
+  {
+    "id": 63,
+    "category": "技術基礎",
+    "question": "教師あり学習",
+    "answer": "ラベル付きデータを使用して、新しい入力に対する出力を予測するアプローチ。"
+  },
+  {
+    "id": 64,
+    "category": "技術基礎",
+    "question": "教師なし学習",
+    "answer": "ラベルなしデータから自然なグループ分けやパターンを見つけるアプローチ。"
+  },
+  {
+    "id": 65,
+    "category": "技術基礎",
+    "question": "強化学習",
+    "answer": "報酬を最大化し、ペナルティを最小化するように試行錯誤を通じて学習するアプローチ。"
+  },
+  {
+    "id": 66,
+    "category": "技術仕様",
+    "question": "サンプリング パラメータ",
+    "answer": "トークン数、温度、Top-P など、AI モデルの出力動作をカスタマイズするための設定。"
+  },
+  {
+    "id": 67,
+    "category": "技術仕様",
+    "question": "トークン数 (Token Count)",
+    "answer": "意味のあるテキスト チャンク（単語、文字、句読点）の数。"
+  },
+  {
+    "id": 68,
+    "category": "技術仕様",
+    "question": "温度 (Temperature)",
+    "answer": "出力の創造性やランダム性を制御する。高いと独創的、低いと安定的になる。"
+  },
+  {
+    "id": 69,
+    "category": "技術仕様",
+    "question": "Top-P (nucleus サンプリング)",
+    "answer": "累積確率に基づいて候補トークンを制限し、出力のランダム性を制御する方法。"
+  },
+  {
+    "id": 70,
+    "category": "技術仕様",
+    "question": "安全性設定",
+    "answer": "モデルの出力をフィルタリングし、有害・不適切なコンテンツを除外する設定。"
+  },
+  {
+    "id": 71,
+    "category": "MLライフサイクル",
+    "question": "MLOps ツール",
+    "answer": "チームの連携、モデルのモニタリング、継続的改善を支援する運用ツール群。"
+  },
+  {
+    "id": 72,
+    "category": "Googleツール",
+    "question": "Document AI API",
+    "answer": "さまざまな形式のドキュメントからデータを自動抽出し、処理・要約を行うツール。"
+  },
+  {
+    "id": 73,
+    "category": "Googleツール",
+    "question": "Cloud Vision API",
+    "answer": "画像内のオブジェクト、テキスト、顔などを検出し分析するツール。"
+  },
+  {
+    "id": 74,
+    "category": "Googleツール",
+    "question": "Cloud Video Intelligence API",
+    "answer": "動画コンテンツを分析し、レコメンデーションや検索に必要な情報を抽出するツール。"
+  },
+  {
+    "id": 75,
+    "category": "Googleツール",
+    "question": "Natural Language API",
+    "answer": "テキストから感情分析、分類、重要エンティティ抽出を行うツール。"
+  },
+  {
+    "id": 76,
+    "category": "Googleツール",
+    "question": "Gemini Code Assist",
+    "answer": "IDE で利用可能な、コードの記述やデバッグを支援する AI アシスタント。"
+  },
+  {
+    "id": 77,
+    "category": "Googleツール",
+    "question": "Agent Assist",
+    "answer": "コンタクトセンターで、人間のオペレーターをリアルタイムで支援するツール。"
+  },
+  {
+    "id": 78,
+    "category": "Googleツール",
+    "question": "会話型エージェント",
+    "answer": "顧客と対話する高度なチャットボットとして機能するサービス。"
+  },
+  {
+    "id": 79,
+    "category": "Googleツール",
+    "question": "会話分析情報",
+    "answer": "顧客とのコミュニケーション全体を分析し、インサイトを提供する機能。"
+  },
+  {
+    "id": 80,
+    "category": "Googleツール",
+    "question": "Gemini Enterprise",
+    "answer": "社内ソースに基づいたカスタム検索や会話エージェントを組織内に統合できるサービス。"
+  },
+  {
+    "id": 81,
+    "category": "技術基礎",
+    "question": "拡張機能 (Extensions)",
+    "answer": "エージェントが API を経由して外部サービスに接続するためのツール。"
+  },
+  {
+    "id": 82,
+    "category": "技術基礎",
+    "question": "関数 (Functions)",
+    "answer": "エージェントが実行すべき具体的な行動やタスクを定義するツール。"
+  },
+  {
+    "id": 83,
+    "category": "技術基礎",
+    "question": "データストア (Datastores)",
+    "answer": "エージェントが情報（知識）にアクセスするためのリポジトリ。"
+  },
+  {
+    "id": 84,
+    "category": "技術基礎",
+    "question": "プラグイン (Plugins)",
+    "answer": "エージェントに新しいスキルや統合機能を追加するためのコンポーネント。"
+  },
+  {
+    "id": 85,
+    "category": "技術基礎",
+    "question": "決定的エージェント",
+    "answer": "行動のパスが事前に定義（固定）されているエージェント。"
+  },
+  {
+    "id": 86,
+    "category": "技術基礎",
+    "question": "生成型エージェント",
+    "answer": "LLM を使用して自然言語で行動を決定し、会話にリアルな雰囲気を与えるエージェント。"
+  },
+  {
+    "id": 87,
+    "category": "技術基礎",
+    "question": "ハイブリッド エージェント",
+    "answer": "決定的（確実性）と生成型（柔軟性）の両方の機能を兼ね備えたエージェント。"
+  },
+  {
+    "id": 100,
+    "category": "責任あるAI",
+    "question": "倫理的な AI (Ethical AI)",
+    "answer": "AI アプリケーションが害を及ぼさず、倫理的かつ公平に使用されている状態。"
+  }
+]

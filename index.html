@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="GAIL対策">
+    <meta name="theme-color" content="#1A73E8">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS用メタタグ -->
+    <link rel="apple-touch-icon" href="icon-192.svg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+
+    <title>Generative AI Leader 対策アプリ</title>
+
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- スプラッシュ画面 -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <svg viewBox="0 0 200 200" class="logo-svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1A73E8;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#1967D2;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#174EA6;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="60" fill="url(#logoGradient)" opacity="0.1"/>
+                    <path d="M100 50 L100 90 M100 110 L100 150 M70 100 L90 100 M110 100 L130 100"
+                          stroke="url(#logoGradient)" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="100" cy="100" r="8" fill="url(#logoGradient)"/>
+                </svg>
+            </div>
+            <h1 class="splash-title">Generative AI Leader</h1>
+            <p class="splash-subtitle">Google Cloud 認定試験対策</p>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="app-title">
+                <span class="material-icons">school</span>
+                GAIL対策
+            </h1>
+            <button id="darkModeToggle" class="icon-button" aria-label="ダークモード切替">
+                <span class="material-icons">dark_mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <!-- ダッシュボードページ -->
+        <div class="page dashboard-page active" id="dashboardPage">
+            <!-- ダッシュボードセクション -->
+            <section class="dashboard" id="dashboard">
+            <div class="dashboard-header">
+                <h2>学習進捗</h2>
+                <button id="toggleDashboard" class="text-button">
+                    <span class="material-icons">expand_less</span>
+                </button>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- ストリーク表示 -->
+                <div class="streak-display">
+                    <div class="streak-icon">🔥</div>
+                    <div class="streak-info">
+                        <div class="streak-number" id="streakNumber">0</div>
+                        <div class="streak-label">日連続</div>
+                    </div>
+                    <div class="streak-message" id="streakMessage">今日も学習しよう！</div>
+                </div>
+
+                <!-- 全体進捗 -->
+                <div class="progress-overview">
+                    <div class="donut-chart-container">
+                        <svg class="donut-chart" viewBox="0 0 200 200">
+                            <circle class="donut-background" cx="100" cy="100" r="80"></circle>
+                            <circle class="donut-progress" cx="100" cy="100" r="80" id="progressCircle"></circle>
+                        </svg>
+                        <div class="donut-center">
+                            <div class="progress-percentage" id="overallPercentage">0%</div>
+                            <div class="progress-label">完了</div>
+                        </div>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="masteredCount">0</span>
+                            <span class="stat-label">覚えた</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="remainingCount">0</span>
+                            <span class="stat-label">残り</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- カテゴリー別進捗 -->
+                <div class="category-progress">
+                    <h3>カテゴリー別達成率</h3>
+                    <div class="category-list" id="categoryList">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- 学習ページ -->
+        <div class="page study-page" id="studyPage">
+            <!-- コントロールパネル -->
+            <section class="controls">
+            <div class="control-row">
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">すべてのカテゴリー</option>
+                </select>
+                <button id="showUnmasteredOnly" class="filter-button">
+                    <span class="material-icons">filter_list</span>
+                    未習得のみ
+                </button>
+            </div>
+            <div class="control-row">
+                <button id="shuffleBtn" class="control-button">
+                    <span class="material-icons">shuffle</span>
+                    シャッフル
+                </button>
+                <button id="resetBtn" class="control-button">
+                    <span class="material-icons">refresh</span>
+                    リセット
+                </button>
+            </div>
+        </section>
+
+        <!-- フラッシュカードセクション -->
+        <section class="flashcard-section">
+            <div class="card-progress">
+                <button id="jumpToCard" class="card-number">
+                    <span id="currentCard">1</span>
+                </button>
+                <span class="progress-separator">/</span>
+                <span id="totalCards">100</span>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-category" id="cardCategory">カテゴリー</div>
+                            <div class="card-content" id="cardQuestion">問題</div>
+                            <div class="card-hint">タップして解答を表示</div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-category" id="cardCategoryBack">カテゴリー</div>
+                            <div class="card-content" id="cardAnswer">解答</div>
+                            <div class="card-hint">タップして問題に戻る</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ナビゲーションボタン -->
+            <div class="navigation">
+                <button id="prevBtn" class="nav-button">
+                    <span class="material-icons">chevron_left</span>
+                    前へ
+                </button>
+                <div class="action-buttons">
+                    <button id="notMasteredBtn" class="action-button not-mastered">
+                        <span class="material-icons">close</span>
+                        まだ
+                    </button>
+                    <button id="masteredBtn" class="action-button mastered">
+                        <span class="material-icons">check</span>
+                        覚えた
+                    </button>
+                </div>
+                <button id="nextBtn" class="nav-button">
+                    次へ
+                    <span class="material-icons">chevron_right</span>
+                </button>
+            </div>
+        </section>
+        </div>
+
+        <!-- テストページ -->
+        <div class="page test-page" id="testPage">
+            <section class="test-section">
+                <div class="test-header">
+                    <h2>テストモード</h2>
+                    <div class="test-score">
+                        <span id="testScore">0</span> / <span id="testTotal">10</span>
+                    </div>
+                </div>
+
+                <div class="test-progress-bar">
+                    <div class="test-progress-fill" id="testProgressFill"></div>
+                </div>
+
+                <div class="test-content" id="testContent">
+                    <div class="test-question-card">
+                        <div class="test-category" id="testCategory">カテゴリー</div>
+                        <div class="test-question" id="testQuestion">問題</div>
+                    </div>
+
+                    <div class="test-options" id="testOptions">
+                        <!-- 選択肢がJSで動的生成される -->
+                    </div>
+                </div>
+
+                <div class="test-result hidden" id="testResult">
+                    <div class="result-icon" id="resultIcon">🎉</div>
+                    <h3 id="resultTitle">テスト完了！</h3>
+                    <div class="result-score">
+                        <span id="finalScore">0</span> / <span id="finalTotal">10</span>
+                        <div class="result-percentage" id="resultPercentage">0%</div>
+                    </div>
+                    <button id="retryTest" class="primary-button">もう一度</button>
+                    <button id="backToDashboard" class="secondary-button">ダッシュボードへ</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ボトムナビゲーション -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-page="dashboard">
+            <span class="material-icons">dashboard</span>
+            <span class="nav-label">ダッシュボード</span>
+        </button>
+        <button class="nav-item" data-page="study">
+            <span class="material-icons">school</span>
+            <span class="nav-label">学習</span>
+        </button>
+        <button class="nav-item" data-page="test">
+            <span class="material-icons">quiz</span>
+            <span class="nav-label">テスト</span>
+        </button>
+    </nav>
+
+    <!-- 紙吹雪コンテナ -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- カード番号ジャンプモーダル -->
+    <div class="modal" id="jumpModal">
+        <div class="modal-content">
+            <h3>カード番号を入力</h3>
+            <input type="number" id="jumpInput" min="1" placeholder="1-100">
+            <div class="modal-actions">
+                <button id="cancelJump" class="modal-button secondary">キャンセル</button>
+                <button id="confirmJump" class="modal-button primary">移動</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
