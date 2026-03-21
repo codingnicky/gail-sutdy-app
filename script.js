@@ -17,6 +17,7 @@ let testQuestions = [];
 let currentTestIndex = 0;
 let testScore = 0;
 let testAnswers = [];
+let mockExamQuestions = []; // 模擬問題データ
 
 // Gemini API用
 let geminiApiKey = null;
@@ -109,6 +110,7 @@ window.addEventListener('offline', () => {
 // ==================== データ読み込み ====================
 async function loadFlashcards() {
     try {
+        // フラッシュカードデータの読み込み
         const response = await fetch('フラッシュカードデータ.json');
         flashcards = await response.json();
 
@@ -121,8 +123,13 @@ async function loadFlashcards() {
         shuffleOrder = [...originalOrder];
 
         console.log(`${flashcards.length}枚のフラッシュカードを読み込みました`);
+
+        // 模擬問題の読み込み
+        const mockResponse = await fetch('gail_模擬問題.json');
+        mockExamQuestions = await mockResponse.json();
+        console.log(`${mockExamQuestions.length}問の模擬問題を読み込みました`);
     } catch (error) {
-        console.error('フラッシュカードの読み込みに失敗しました:', error);
+        console.error('データの読み込みに失敗しました:', error);
         alert('データの読み込みに失敗しました。ページを再読み込みしてください。');
     }
 }
@@ -843,19 +850,82 @@ function vibrateMedium() {
 }
 
 // ==================== テストモード ====================
+// 質問文と選択肢を分離する関数
+function parseQuestionAndOptions(questionText) {
+    // 質問文と選択肢を分離
+    const parts = questionText.split(/\n\n/);
+    const questionOnly = parts[0];
+
+    // 選択肢を抽出（A. B. C. D.で始まる行）
+    const optionsText = parts.slice(1).join('\n\n');
+    const optionLines = optionsText.split('\n').filter(line => line.trim());
+
+    const options = [];
+    optionLines.forEach(line => {
+        const match = line.match(/^([A-D])\.\s*(.+)$/);
+        if (match) {
+            options.push({
+                letter: match[1],
+                text: match[2]
+            });
+        }
+    });
+
+    return { question: questionOnly, options };
+}
+
+// 答えから正解と解説を分離する関数
+function parseAnswer(answerText) {
+    const match = answerText.match(/^正解:\s*([A-D])\s*\n\n(.+)$/s);
+    if (match) {
+        return {
+            correctAnswer: match[1],
+            explanation: match[2]
+        };
+    }
+    return { correctAnswer: '', explanation: answerText };
+}
+
+// 解説表示用の関数
+function showExplanation(explanation, isCorrect) {
+    // 解説表示エリアを作成または取得
+    let explanationEl = document.getElementById('testExplanation');
+    if (!explanationEl) {
+        explanationEl = document.createElement('div');
+        explanationEl.id = 'testExplanation';
+        explanationEl.className = 'test-explanation';
+        document.getElementById('testContent').appendChild(explanationEl);
+    }
+
+    explanationEl.innerHTML = `
+        <div class="explanation-header ${isCorrect ? 'correct' : 'incorrect'}">
+            ${isCorrect ? '✓ 正解！' : '✗ 不正解'}
+        </div>
+        <div class="explanation-text">${explanation}</div>
+    `;
+    explanationEl.classList.remove('hidden');
+}
+
+function hideExplanation() {
+    const explanationEl = document.getElementById('testExplanation');
+    if (explanationEl) {
+        explanationEl.classList.add('hidden');
+    }
+}
+
 function startTest() {
     // テストをリセット
     currentTestIndex = 0;
     testScore = 0;
     testAnswers = [];
 
-    // ランダムに10問選択
-    const allCards = [...flashcards];
+    // 模擬問題からランダムに10問選択
+    const allQuestions = [...mockExamQuestions];
     testQuestions = [];
 
-    for (let i = 0; i < 10 && i < allCards.length; i++) {
-        const randomIndex = Math.floor(Math.random() * allCards.length);
-        testQuestions.push(allCards.splice(randomIndex, 1)[0]);
+    for (let i = 0; i < 10 && i < allQuestions.length; i++) {
+        const randomIndex = Math.floor(Math.random() * allQuestions.length);
+        testQuestions.push(allQuestions.splice(randomIndex, 1)[0]);
     }
 
     // UI初期化
@@ -864,6 +934,9 @@ function startTest() {
     document.getElementById('testScore').textContent = '0';
     document.getElementById('testTotal').textContent = testQuestions.length;
     document.getElementById('testProgressFill').style.width = '0%';
+
+    // 解説を非表示にリセット
+    hideExplanation();
 
     // 最初の問題を表示
     showTestQuestion();
@@ -877,25 +950,31 @@ function showTestQuestion() {
 
     const question = testQuestions[currentTestIndex];
 
-    // 問題を表示
+    // カテゴリーを表示
     document.getElementById('testCategory').textContent = question.category;
-    document.getElementById('testQuestion').textContent = question.question;
 
-    // 4択を生成
-    const options = generateTestOptions(question);
+    // 質問と選択肢を分離
+    const { question: questionOnly, options } = parseQuestionAndOptions(question.question);
+    document.getElementById('testQuestion').textContent = questionOnly;
+
+    // 答えから正解を取得
+    const { correctAnswer } = parseAnswer(question.answer);
+
+    // 選択肢を表示
     const optionsContainer = document.getElementById('testOptions');
     optionsContainer.innerHTML = '';
 
-    options.forEach((option, index) => {
+    options.forEach(option => {
         const button = document.createElement('button');
         button.className = 'test-option';
-        button.textContent = option.text;
-        button.addEventListener('click', () => selectTestOption(option.isCorrect, button));
+        button.textContent = `${option.letter}. ${option.text}`;
+        button.dataset.letter = option.letter;
+        button.addEventListener('click', () => selectTestOption(option.letter === correctAnswer, button, option.letter));
         optionsContainer.appendChild(button);
     });
 
     // 進捗を更新
-    const progress = ((currentTestIndex) / testQuestions.length) * 100;
+    const progress = (currentTestIndex / testQuestions.length) * 100;
     document.getElementById('testProgressFill').style.width = progress + '%';
 }
 
@@ -923,18 +1002,25 @@ function generateTestOptions(correctQuestion) {
     return options.sort(() => Math.random() - 0.5);
 }
 
-function selectTestOption(isCorrect, button) {
+function selectTestOption(isCorrect, button, selectedLetter) {
     vibrateLight();
+
+    const question = testQuestions[currentTestIndex];
+    const { correctAnswer, explanation } = parseAnswer(question.answer);
 
     // 全てのボタンを無効化
     document.querySelectorAll('.test-option').forEach(btn => {
         btn.classList.add('disabled');
         btn.style.pointerEvents = 'none';
+
+        // 正解をハイライト
+        if (btn.dataset.letter === correctAnswer) {
+            btn.classList.add('correct');
+        }
     });
 
     // 選択されたボタンをハイライト
     if (isCorrect) {
-        button.classList.add('correct');
         testScore++;
         testAnswers.push(true);
         document.getElementById('testScore').textContent = testScore;
@@ -942,20 +1028,17 @@ function selectTestOption(isCorrect, button) {
     } else {
         button.classList.add('incorrect');
         testAnswers.push(false);
-
-        // 正解を表示
-        document.querySelectorAll('.test-option').forEach(btn => {
-            if (btn.textContent === testQuestions[currentTestIndex].answer) {
-                btn.classList.add('correct');
-            }
-        });
     }
 
-    // 1.5秒後に次の問題へ
+    // 解説を表示
+    showExplanation(explanation, isCorrect);
+
+    // 3秒後に次の問題へ（解説を読む時間を確保）
     setTimeout(() => {
+        hideExplanation();
         currentTestIndex++;
         showTestQuestion();
-    }, 1500);
+    }, 3000);
 }
 
 function showTestResult() {

@@ -1,11 +1,12 @@
 // Service Worker - GAIL対策アプリ
-const CACHE_NAME = 'gail-app-v1';
+const CACHE_NAME = 'gail-app-v2';
 const urlsToCache = [
   './',
   './index.html',
   './style.css',
   './script.js',
   './フラッシュカードデータ.json',
+  './gail_模擬問題.json',
   './manifest.json',
   './icon-192.svg',
   './icon-512.svg',
