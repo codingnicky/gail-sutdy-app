@@ -18,6 +18,9 @@ let currentTestIndex = 0;
 let testScore = 0;
 let testAnswers = [];
 
+// Gemini API用
+let geminiApiKey = null;
+
 // スワイプ検出用
 let touchStartX = 0;
 let touchEndX = 0;
@@ -160,6 +163,9 @@ function loadUserData() {
 
     // ストリークデータを読み込み
     loadStreakData();
+
+    // Gemini APIキーを読み込み
+    loadGeminiApiKey();
 }
 
 function saveUserData() {
@@ -311,6 +317,12 @@ function setupEventListeners() {
     // テストモードボタン
     document.getElementById('retryTest').addEventListener('click', startTest);
     document.getElementById('backToDashboard').addEventListener('click', () => switchPage('dashboard'));
+
+    // Gemini関連
+    document.getElementById('saveApiKey').addEventListener('click', saveGeminiApiKey);
+    document.getElementById('askGeminiBtn').addEventListener('click', openGeminiModal);
+    document.getElementById('closeGemini').addEventListener('click', closeGeminiModal);
+    document.getElementById('sendGemini').addEventListener('click', sendGeminiQuestion);
 
     // キーボード操作
     document.addEventListener('keydown', handleKeyPress);
@@ -980,4 +992,150 @@ function showTestResult() {
     document.getElementById('testProgressFill').style.width = '100%';
 
     vibrateSuccess();
+}
+
+// ==================== Gemini API統合 ====================
+function loadGeminiApiKey() {
+    const savedKey = localStorage.getItem('geminiApiKey');
+    if (savedKey) {
+        geminiApiKey = savedKey;
+        document.getElementById('geminiApiKey').value = savedKey;
+        updateApiStatus('APIキーが設定されています', 'success');
+    }
+}
+
+function saveGeminiApiKey() {
+    const keyInput = document.getElementById('geminiApiKey');
+    const key = keyInput.value.trim();
+
+    if (!key) {
+        updateApiStatus('APIキーを入力してください', 'error');
+        return;
+    }
+
+    if (!key.startsWith('AIzaSy')) {
+        updateApiStatus('無効なAPIキーです', 'error');
+        return;
+    }
+
+    geminiApiKey = key;
+    localStorage.setItem('geminiApiKey', key);
+    updateApiStatus('APIキーを保存しました！', 'success');
+    vibrateSuccess();
+}
+
+function updateApiStatus(message, type) {
+    const statusEl = document.getElementById('apiStatus');
+    statusEl.textContent = message;
+    statusEl.className = `api-status ${type}`;
+
+    setTimeout(() => {
+        statusEl.textContent = '';
+        statusEl.className = 'api-status';
+    }, 3000);
+}
+
+function openGeminiModal() {
+    if (!geminiApiKey) {
+        alert('Gemini APIキーが設定されていません。\nダッシュボードで設定してください。');
+        switchPage('dashboard');
+        return;
+    }
+
+    const actualIndex = shuffleOrder[currentIndex];
+    const card = flashcards[actualIndex];
+
+    // 質問を自動入力
+    const defaultQuestion = `「${card.question}」について詳しく教えてください。`;
+    document.getElementById('geminiQuestion').value = defaultQuestion;
+
+    // モーダルを表示
+    document.getElementById('geminiModal').classList.add('active');
+    document.getElementById('geminiAnswer').classList.add('hidden');
+    document.getElementById('geminiLoading').classList.add('hidden');
+
+    vibrateLight();
+}
+
+function closeGeminiModal() {
+    document.getElementById('geminiModal').classList.remove('active');
+    vibrateLight();
+}
+
+async function sendGeminiQuestion() {
+    const question = document.getElementById('geminiQuestion').value.trim();
+
+    if (!question) {
+        alert('質問を入力してください');
+        return;
+    }
+
+    // ローディング表示
+    document.getElementById('geminiLoading').classList.remove('hidden');
+    document.getElementById('geminiAnswer').classList.add('hidden');
+    document.getElementById('sendGemini').disabled = true;
+
+    vibrateLight();
+
+    try {
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: question
+                        }]
+                    }]
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('API呼び出しに失敗しました');
+        }
+
+        const data = await response.json();
+
+        // レスポンスを表示
+        const answer = data.candidates[0].content.parts[0].text;
+        displayGeminiAnswer(answer);
+
+        vibrateSuccess();
+
+    } catch (error) {
+        console.error('Gemini API Error:', error);
+        document.getElementById('geminiAnswer').innerHTML = `
+            <p style="color: var(--color-danger)">
+                エラーが発生しました。<br>
+                APIキーを確認するか、しばらくしてからもう一度お試しください。
+            </p>
+        `;
+        document.getElementById('geminiAnswer').classList.remove('hidden');
+    } finally {
+        // ローディング非表示
+        document.getElementById('geminiLoading').classList.add('hidden');
+        document.getElementById('sendGemini').disabled = false;
+    }
+}
+
+function displayGeminiAnswer(text) {
+    const answerEl = document.getElementById('geminiAnswer');
+
+    // マークダウン風のフォーマットを適用
+    let formatted = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+
+    answerEl.innerHTML = `<p>${formatted}</p>`;
+    answerEl.classList.remove('hidden');
+
+    // スクロール
+    answerEl.scrollTop = 0;
 }
