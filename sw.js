@@ -1,5 +1,5 @@
 // Service Worker - GAIL対策アプリ
-const CACHE_NAME = 'gail-app-v2';
+const CACHE_NAME = 'gail-app-v3';
 const urlsToCache = [
   './',
   './index.html',
