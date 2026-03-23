@@ -496,20 +496,18 @@ function markAsMastered() {
 
     masteredCards.add(cardId);
 
-    // 紙吹雪演出を表示
-    triggerConfetti();
-
     // ハプティックフィードバック（成功）
     vibrateSuccess();
 
-    // ストリークを更新
-    updateStreak();
+    // 軽量な紙吹雪演出を表示
+    triggerConfetti();
 
     // アニメーション付きで次のカードへ
     animateCardTransition(() => {
         showNextCard();
         updateOverallProgress();
         updateCategoryProgress();
+        updateStreak();
     });
 }
 
@@ -539,8 +537,8 @@ function animateCardTransition(callback) {
 
         setTimeout(() => {
             flashcard.classList.remove('card-enter');
-        }, 400);
-    }, 400);
+        }, 250);
+    }, 250);
 }
 
 // ==================== 進捗表示 ====================
@@ -796,8 +794,8 @@ window.addEventListener('beforeunload', saveUserData);
 function triggerConfetti() {
     const container = document.getElementById('confettiContainer');
     const colors = ['#1A73E8', '#0F9D58', '#DB4437', '#F4B400', '#AB47BC'];
-    const shapes = ['square', 'circle', 'triangle'];
-    const confettiCount = 20; // 50→20に削減
+    const shapes = ['square', 'circle'];
+    const confettiCount = 12; // 20→12に削減
 
     for (let i = 0; i < confettiCount; i++) {
         const confetti = document.createElement('div');
@@ -813,17 +811,17 @@ function triggerConfetti() {
         confetti.style.borderBottomColor = color;
 
         // ランダムな遅延（短縮）
-        confetti.style.animationDelay = Math.random() * 0.2 + 's';
+        confetti.style.animationDelay = Math.random() * 0.1 + 's';
 
-        // ランダムな持続時間（短縮：2-3秒→1.5-2.5秒）
-        confetti.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+        // ランダムな持続時間（短縮：1.5-2.5秒→1-1.8秒）
+        confetti.style.animationDuration = (Math.random() * 0.8 + 1) + 's';
 
         container.appendChild(confetti);
 
-        // アニメーション終了後に削除（短縮）
+        // アニメーション終了後に削除（短縮：2700ms→1800ms）
         setTimeout(() => {
             confetti.remove();
-        }, 2700);
+        }, 1800);
     }
 }
 
@@ -1162,7 +1160,7 @@ async function sendGeminiQuestion() {
 
     try {
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`,
             {
                 method: 'POST',
                 headers: {
